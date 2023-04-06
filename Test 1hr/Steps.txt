@@ -1,0 +1,23 @@
+https://minikube.sigs.k8s.io/docs/start/
+
+Create all files - 
+
+kubectl get pod
+
+kubectl apply -f mongo-config.yaml
+kubectl apply -f mongo-secret.yaml
+kubectl apply -f mongo.yaml
+kubectl apply -f webapp.yaml
+
+
+kubectl get all
+kubectl get configmap
+kubectl get secret
+kubectl get pod 
+kubectl get service
+
+minikube ip
+kubectl get node -o wide
+
+
+https://gitlab.com/nanuchi/k8s-in-1-hour

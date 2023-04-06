@@ -1,0 +1,40 @@
+https://takacsmark.com/docker-swarm-tutorial-for-beginners/#your-first-swarm-cluster
+
+
+- Install Docker 
+
+
+- docker swarm init
+
+-  docker swarm init
+Swarm initialized: current node (kq0d3die9fx0d9swcuckfgm1y) is now a manager.
+To add a worker to this swarm, run the following command:
+    docker swarm join --token SWMTKN-1-0f22e89awtp8pafb4aqi612iqoig9dchherlil022ndev1zkia-0xr5x120rhztq8x6wzuzcnavt 192.168.65.3:2377
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+- docker stack
+-  docker stack deploy -c docker-compose.yaml nodeapp
+- docker-compose build
+
+- docker stack ls
+NAME      SERVICES   ORCHESTRATOR
+nodeapp   2          Swarm
+
+- docker service ls
+
+- docker stack services nodeapp
+ID             NAME          MODE         REPLICAS   IMAGE                          PORTS
+1x3de40cdwdj   nodeapp_db    replicated   1/1        mongo:4.0.3
+qrlde6l4vlff   nodeapp_web   replicated   1/1        takacsmark/swarm-example:1.0   *:80->3000/tcp
+
+- docker service scale nodeapp_web=4
+nodeapp_web scaled to 4
+overall progress: 4 out of 4 tasks
+1/4: running   [==================================================>]
+2/4: running   [==================================================>]
+3/4: running   [==================================================>]
+4/4: running   [==================================================>]
+verify: Service converged
+
+Refresh Localhost name in browser you can see the responsed coming from different instances.
+

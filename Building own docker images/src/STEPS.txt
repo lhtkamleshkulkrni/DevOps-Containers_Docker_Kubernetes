@@ -1,0 +1,18 @@
+Reference - https://www.youtube.com/watch?v=pg19Z8LL06w&ab_channel=TechWorldwithNana
+
+Create node application 
+Create dockerfile 
+
+- docker build -t node-app:1.0 . 
+
+- docker images
+REPOSITORY                           TAG                        IMAGE ID       CREATED              SIZE
+node-app                             1.0                        4ed3ee9c82ca   About a minute ago   183MB
+
+Run container using this image 
+- docker run -d -p 3000:3000 node-app:1.0
+
+- docker ps
+docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED              STATUS              PORTS                                                                                                                                  NAMES
+35c40b37c679   node-app:1.0                          "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:3000->3000/tcp  

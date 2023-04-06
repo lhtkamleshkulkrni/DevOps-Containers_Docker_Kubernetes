@@ -1,0 +1,151 @@
+Kubernetes - 
+
+Install Minikube 
+https://minikube.sigs.k8s.io/docs/start/
+
+Windows - exe download
+
+- Download and run the installer - 
+
+New-Item -Path 'c:\' -Name 'minikube' -ItemType Directory -Force
+Invoke-WebRequest -OutFile 'c:\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing
+
+
+- Add the minikube.exe binary to your PATH. Make sure to run PowerShell as Administrator.
+
+$oldPath = [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine)
+if ($oldPath.Split(';') -inotcontains 'C:\minikube'){ `
+  [Environment]::SetEnvironmentVariable('Path', $('{0};C:\minikube' -f $oldPath), [EnvironmentVariableTarget]::Machine) `
+}
+
+- Check to run commands ( restrt the PowerShell )
+
+kubectl
+minikube
+
+----------------------------------------------------------------
+- Start your cluster
+
+minikube start
+
+kubectl get nodes 
+minikube status 
+
+kubectl version
+
+kubectl get pod
+kubectl get services
+----------------------------------------------------------------
+kubectl create deployment nginx-depl --image=nginx
+kubectl get deployment
+kubectl get pod
+kubectl get replicaset  - managing the replicas of tha pods 
+
+- kubectl edit deployment file (not nessesary)
+kubectl edit deployment nginx-depl
+kubectl get pod
+kubectl get replicaset
+
+- create mongo deployment
+kubectl create deployment mongo-depl --image=mongo
+kubectl logs mongo-depl-{pod-name}
+kubectl describe pod mongo-depl-{pod-name}
+
+- debugging
+kubectl logs {pod-name}
+- For asscessing the container 
+kubectl exec -it {pod-name} -- bin/bash
+
+- delete deplyoment
+kubectl delete deployment mongo-depl
+kubectl delete deployment nginx-depl
+
+- create or edit config file
+vim nginx-deployment.yaml
+kubectl apply -f nginx-deployment.yaml
+kubectl get pod
+kubectl get deployment
+
+- delete with config
+kubectl delete -f nginx-deployment.yaml
+
+------------------------------------------------------------------------------------------------------------------------------------
+Mongobd Environment setup using kubernates - 
+
+https://gitlab.com/nanuchi/youtube-tutorial-series/-/blob/master/demo-kubernetes-components/k8s-commands.md
+
+STEPS -> 
+
+kubectl get all 
+
+- create mongo.yaml deployment configuration file 
+- create mongo-secret.yaml file for credential
+
+kubectl apply -f mongo-secret.yaml
+kubectl get secret
+kubectl get all 
+
+kubectl apply -f mongo.yaml
+kubectl get all 
+
+- create service configuration in mongo.yaml file
+kubectl apply -f mongo.yaml
+kubectl get all 
+kubectl get service
+kubectl describe service mongodb-service
+kubectl get pod -o wide
+
+Mongo Express Deployment & Service & ConfigMap
+
+kubectl apply -f mongo-configmap.yaml 
+kubectl get pod
+kubectl apply -f mongo-express.yaml 
+kubectl get pod
+
+kubectl get service
+
+-create external service in mongo-express.yaml
+
+- give a URL to external service in minikube
+kubectl get service
+
+minikube service mongo-express-service
+
+
+
+
+---------------------------------------------------------------------------------------------------
+- kubectl get commands
+
+kubectl get pod
+kubectl get pod --watch
+kubectl get pod -o wide
+kubectl get service
+kubectl get secret
+
+
+
+
+------------------------------------
+- kubectl apply commands in order
+
+kubectl apply -f mongo-secret.yaml
+kubectl apply -f mongo.yaml
+kubectl apply -f mongo-configmap.yaml 
+kubectl apply -f mongo-express.yaml
+
+-------------------------------------
+- kubectl apply commands in order
+
+kubectl apply -f mongo-secret.yaml
+kubectl apply -f mongo.yaml
+kubectl apply -f mongo-configmap.yaml 
+kubectl apply -f mongo-express.yaml
+
+-------------------------------------
+
+- kubectl debugging commands
+
+kubectl describe pod mongodb-deployment-xxxxxx
+kubectl describe service mongodb-service
+kubectl logs mongo-express-xxxxxx
